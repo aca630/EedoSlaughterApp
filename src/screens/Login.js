@@ -123,7 +123,7 @@ const Login = ({ navigation }) => {
                 <Card style={{ padding: 20, backgroundColor: '#f1f5f9' }}>
                     <Logo />
                     <View><Text style={{ textAlign: 'center', marginBottom: 5, marginTop: 5, color: theme.colors.primary }}>{curVer}</Text></View>
-                    <View><Text style={{ textAlign: 'center', fontSize: 20 }}>Terminal App</Text></View>
+                    <View><Text style={{ textAlign: 'center', fontSize: 20 }}>Slaughter App</Text></View>
                     {/* / <View><Text style={{ textAlign: 'center', fontSize: 12 }}>Utility App</Text></View> */}
                     <TextInputComponent
                         label="Username"

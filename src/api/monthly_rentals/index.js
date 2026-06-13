@@ -6,7 +6,7 @@ export async function postOccupantMonthlyPayment(body, token) {
 
   console.log(token, ' token');
   const response = await axios.post(
-    `${'http://192.168.1.157:8000/api/'}collector/occupant_monthly_payment`,
+    `${'http://192.168.1.202:8000/api/'}collector/occupant_monthly_payment`,
     body,
     {
       headers: {

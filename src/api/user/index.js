@@ -6,7 +6,7 @@ export  async function loginUser(params) {
 
 console.log(params,' params');
   const response = axios.post(
-    `http://192.168.1.157:8000/api/collector/login`,
+    `http://192.168.1.202:8000/api/collector/login`,
     params,
     {
       headers: {

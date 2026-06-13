@@ -3,7 +3,7 @@ import axios from "axios";
 
 export async function getSalesHits(auth) {
   const response = await axios.get(
-    `${'http://192.168.1.157:8000/api/'}gencoordinator/OverAllReports?from=${auth?.from}&to=${auth?.to}`,
+    `${'http://192.168.1.202:8000/api/'}gencoordinator/OverAllReports?from=${auth?.from}&to=${auth?.to}`,
     {
       headers: {
         'Content-Type': 'application/json',
@@ -19,7 +19,7 @@ export async function getSalesHits(auth) {
 
 export async function getWinReportsPerDrawCashier(auth) {
   const response = await axios.get(
-    `${'http://192.168.1.157:8000/api/'}gencoordinator/OverAllWinReportsCashier?supervisorId=${auth?.supervisorId}&from=${auth?.from}&to=${auth?.to}&drawTime=${auth.drawTime}`,
+    `${'http://192.168.1.202:8000/api/'}gencoordinator/OverAllWinReportsCashier?supervisorId=${auth?.supervisorId}&from=${auth?.from}&to=${auth?.to}&drawTime=${auth.drawTime}`,
     {
       headers: {
         'Content-Type': 'application/json',
@@ -35,7 +35,7 @@ export async function getWinReportsPerDrawCashier(auth) {
 
 export async function getWinReportsPerDraw(auth) {
   const response = await axios.get(
-    `${'http://192.168.1.157:8000/api/'}gencoordinator/OverAllWinReports?cashierId=${auth?.cashierId}&from=${auth?.from}&to=${auth?.to}&drawTime=${auth.drawTime}`,
+    `${'http://192.168.1.202:8000/api/'}gencoordinator/OverAllWinReports?cashierId=${auth?.cashierId}&from=${auth?.from}&to=${auth?.to}&drawTime=${auth.drawTime}`,
     {
       headers: {
         'Content-Type': 'application/json',
@@ -51,7 +51,7 @@ export async function getWinReportsPerDraw(auth) {
 
 export async function getTallyPerDraw(auth) {
   const response = await axios.get(
-    `${'http://192.168.1.157:8000/api/'}gencoordinator/CoorTallySheetPerDraw?from=${auth?.from}&to=${auth?.to}&drawTime=${auth.drawTime}`,
+    `${'http://192.168.1.202:8000/api/'}gencoordinator/CoorTallySheetPerDraw?from=${auth?.from}&to=${auth?.to}&drawTime=${auth.drawTime}`,
     {
       headers: {
         'Content-Type': 'application/json',
@@ -86,7 +86,7 @@ export async function getTallyPerDraw(auth) {
 export async function getGrossPerCashier(auth) {
   console.log(auth,' AUTH');
   const response = await axios.get(
-    `${'http://192.168.1.157:8000/api/'}gencoordinator/OverlAllGrossPerCashier?accountantId=${auth?.accountantId}&from=${auth?.from}&to=${auth?.to}`,
+    `${'http://192.168.1.202:8000/api/'}gencoordinator/OverlAllGrossPerCashier?accountantId=${auth?.accountantId}&from=${auth?.from}&to=${auth?.to}`,
     {
       headers: {
         'Content-Type': 'application/json',
@@ -101,7 +101,7 @@ export async function getGrossPerCashier(auth) {
 
 export async function AdminOverlAllGrossPerAccountant(auth) {
   const response = await axios.get(
-    `${'http://192.168.1.157:8000/api/'}admin/AdminOverlAllGrossPerAccountant?&from=${auth?.from}&to=${auth?.to}`,
+    `${'http://192.168.1.202:8000/api/'}admin/AdminOverlAllGrossPerAccountant?&from=${auth?.from}&to=${auth?.to}`,
     {
       headers: {
         'Content-Type': 'application/json',
@@ -119,7 +119,7 @@ export async function AdminOverlAllGrossPerAccountant(auth) {
 export async function getOverlAllGrossPerSuperVisor(auth) {
   console.log(auth,' AUTHsssss');
   const response = await axios.get(
-    `${'http://192.168.1.157:8000/api/'}gencoordinator/OverlAllGrossPerSuperVisor?cashierId=${auth?.cashierId}&from=${auth?.from}&to=${auth?.to}&drawTime=${auth.drawTime}`,
+    `${'http://192.168.1.202:8000/api/'}gencoordinator/OverlAllGrossPerSuperVisor?cashierId=${auth?.cashierId}&from=${auth?.from}&to=${auth?.to}&drawTime=${auth.drawTime}`,
     {
       headers: {
         'Content-Type': 'application/json',
@@ -135,7 +135,7 @@ export async function getOverlAllGrossPerSuperVisor(auth) {
 
 export async function getOverlAllGrossPerTeller(auth) {
   const response = await axios.get(
-    `${'http://192.168.1.157:8000/api/'}gencoordinator/OverlAllGrossPerTeller?supervisorId=${auth?.supervisorId}&from=${auth?.from}&to=${auth?.to}&drawTime=${auth.drawTime}`,
+    `${'http://192.168.1.202:8000/api/'}gencoordinator/OverlAllGrossPerTeller?supervisorId=${auth?.supervisorId}&from=${auth?.from}&to=${auth?.to}&drawTime=${auth.drawTime}`,
     {
       headers: {
         'Content-Type': 'application/json',
@@ -153,7 +153,7 @@ export async function getOverlAllGrossPerTeller(auth) {
 
 export async function getOverlAllGrossTellerPerDraw(auth) {
   const response = await axios.get(
-    `${'http://192.168.1.157:8000/api/'}gencoordinator/OverlAllGrossTellerPerDraw?supervisorId=${auth?.supervisorId}&from=${auth?.from}&to=${auth?.to}&drawTime=${auth.drawTime}`,
+    `${'http://192.168.1.202:8000/api/'}gencoordinator/OverlAllGrossTellerPerDraw?supervisorId=${auth?.supervisorId}&from=${auth?.from}&to=${auth?.to}&drawTime=${auth.drawTime}`,
     {
       headers: {
         'Content-Type': 'application/json',

@@ -6,7 +6,7 @@ export async function getDraw(token) {
   
   console.log(token);
   const response = await axios.get(
-    `${'http://192.168.1.157:8000/api/'}teller/draw`,
+    `${'http://192.168.1.202:8000/api/'}teller/draw`,
     {
       headers: {
         'Content-Type' : 'application/json',

@@ -8,7 +8,7 @@ export async function ApiBindeDevice(body) {
     console.log(body);
 
     const response = await axios.put(
-        `${'http://192.168.1.157:8000/api/'}teller/bindDevice/${body.user.tellerId}`,
+        `${'http://192.168.1.202:8000/api/'}teller/bindDevice/${body.user.tellerId}`,
         {
             deviceId: body?.deviceId
         },

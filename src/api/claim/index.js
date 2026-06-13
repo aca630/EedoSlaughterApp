@@ -5,7 +5,7 @@ import axios from "axios";
    
           
           const response = await axios.put(
-            `${'http://192.168.1.157:8000/api/'}accountant/claim/${body.id}`,
+            `${'http://192.168.1.202:8000/api/'}accountant/claim/${body.id}`,
             {},
             {
               headers: {

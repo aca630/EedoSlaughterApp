@@ -6,7 +6,8 @@ import {
   ToastAndroid,
   NativeEventEmitter,
   DeviceEventEmitter,
-  Button
+  Button,
+  PermissionsAndroid
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { BluetoothManager, BluetoothEscposPrinter, } from "react-native-bluetooth-escpos-printer";
@@ -16,6 +17,16 @@ import { hsdLogo } from '../components/ReceiptLogo';
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Dashboard from "../screens/Dashboard";
+import Private_Transaction from "../screens/Private_Transaction";
+import PrivateDashboard from '../screens/PrivateDashboard';
+import Private_History from "../screens/Private_History";
+import Private_History_View from "../screens/Private_History_View";
+import PublicDashboard from "../screens/PublicDashboard";
+import Public_Cashier from "../screens/Public_Cashier";
+import Public_Slaughter from "../screens/Public_Slaughter";
+import Public_Lookup from "../screens/Public_Lookup";
+
+
 import Login from "../screens/Login";
 import Cash_Tickets from "../screens/Cash_Tickets";
 import { ActivityIndicator } from "react-native-paper";
@@ -35,6 +46,35 @@ export default function AppNavigator() {
   const [isMounted, setIsMounted] = useState(false);
   const listeners = [];
 
+  const ensureBluetoothPermissions = async () => {
+    if (Platform.OS !== "android") {
+      return true;
+    }
+
+    try {
+      if (Platform.Version >= 31) {
+        const permissions = [
+          PermissionsAndroid.PERMISSIONS.BLUETOOTH_CONNECT,
+          PermissionsAndroid.PERMISSIONS.BLUETOOTH_SCAN,
+        ];
+        const result = await PermissionsAndroid.requestMultiple(permissions);
+
+        return permissions.every(
+          permission => result[permission] === PermissionsAndroid.RESULTS.GRANTED
+        );
+      }
+
+      const result = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION
+      );
+
+      return result === PermissionsAndroid.RESULTS.GRANTED;
+    } catch (error) {
+      console.log("Bluetooth permission error:", error);
+      return false;
+    }
+  };
+
 
   //   // 🧭 Function to get user from AsyncStorage
   const handleGetUser = async () => {
@@ -49,9 +89,15 @@ export default function AppNavigator() {
     }
   };
 
+
   //  Function to open or close Bluetooth
-  const openBluetooth = (v) => {
+  const openBluetooth = async (v) => {
     console.log(v,' vvvvxxxxxxxx');
+    const hasBluetoothPermission = await ensureBluetoothPermissions();
+    if (!hasBluetoothPermission) {
+      setLoading(false);
+      return;
+    }
 
     if (v) {
       BluetoothChecker()
@@ -111,7 +157,13 @@ export default function AppNavigator() {
   };
 
 
-  const BluetoothChecker =()=>{
+  const BluetoothChecker = async () => {
+    const hasBluetoothPermission = await ensureBluetoothPermissions();
+    if (!hasBluetoothPermission) {
+      setLoading(false);
+      return;
+    }
+
      // check if bluetooth enabled
      BluetoothManager.isBluetoothEnabled().then(
       (enabled) => {
@@ -242,6 +294,61 @@ export default function AppNavigator() {
               component={Cash_Tickets}
               options={{ headerShown: false }}
             />
+
+            <Stack.Screen
+              name="Dashboard"
+              component={Dashboard}
+              options={{ headerShown: false }}
+            />
+
+            <Stack.Screen
+              name="Private_Transaction"
+              component={Private_Transaction}
+              options={{ headerShown: false }}
+            />         
+
+            <Stack.Screen
+              name="Private_Dashboard"
+              component={PrivateDashboard}
+              options={{ headerShown: false }}
+            />   
+
+            <Stack.Screen
+              name="Private_History"
+              component={Private_History}
+              options={{ headerShown: false }}
+            />                        
+
+            <Stack.Screen
+              name="Private_History_View"
+              component={Private_History_View}
+              options={{ headerShown: false }}
+            />
+
+            <Stack.Screen
+              name="Public_Cashier"
+              component={Public_Cashier}
+              options={{ headerShown: false }}
+            />
+
+            <Stack.Screen
+              name="Public_Dashboard"
+              component={PublicDashboard}
+              options={{ headerShown: false }}
+            />
+
+            <Stack.Screen
+              name="Public_Slaughter"
+              component={Public_Slaughter}
+              options={{ headerShown: false }}
+            />
+
+            <Stack.Screen
+              name="Public_Lookup"
+              component={Public_Lookup}
+              options={{ headerShown: false }}
+            />
+
 
           </Stack.Navigator>
 

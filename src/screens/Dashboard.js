@@ -11,7 +11,6 @@ import moment from "moment-timezone";
 import { ScrollView,RefreshControl,} from "react-native-gesture-handler";
 
 
-
 const Dashboard = ({ props }) => {
     const navigation = useNavigation()
     const [isBind, setisBind] = useState(false);
@@ -79,66 +78,114 @@ const Dashboard = ({ props }) => {
     return (
 
 
-         <SafeAreaView style={{ padding: 10 }}>
-                <ScrollView refreshControl={
-                  <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-                }>
-        <View>
+<SafeAreaView style={{ flex: 1, padding: 10, backgroundColor: '#f6f7fb' }}>
+  <ScrollView
+    refreshControl={
+      <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+    }
+    contentContainerStyle={{ flexGrow: 1, justifyContent: 'space-between' }}
+  >
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text
+        style={{
+          textAlign: 'center',
+          fontSize: 22,
+          fontWeight: 'bold',
+          color: '#ad46ff',
+          marginBottom: 40,
+        }}
+      >
+        Slaughter House
+      </Text>
 
-
-
-            <View><Text style={{ textAlign: 'center', fontSize: 20, fontWeight: 'bold', color: '#ad46ff' }}>Collector Cash Ticket App</Text></View>
-
-
-
-            <View><Text style={{ textAlign: 'center', fontSize: 18, fontWeight: 'bold',}}>{from}</Text></View>
-
-            <View style={{
-                borderBottomColor: '#ad46ff',
-                borderBottomWidth: 1, paddingBottom: 10
-            }}>
-                <View><Text style={{ textAlign: 'center', fontSize: 50, fontWeight: 'bold', color: '#ad46ff', }}>{(data?.total ?? 0)?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</Text></View>
-                <View><Text style={{ textAlign: 'center', fontSize: 18, fontWeight: 'bold', marginBottom: 20 }}>Cash on Hand</Text></View>
-            </View>
-
-
-            <Grid style={{ maxHeight: 100 }}>
-                <Row>
-
-
-                    <Col>
-                        <View>
-                            <Card style={{ height: 80 }} onPress={() => {
-                                navigation.navigate('Cash_Tickets')
-                            }}>
-                                <Grid style={{ maxHeight: 100 }} >
-                                    <Row>
-                                        <Col >
-                                            <View>
-                                                <Text style={{ fontSize: 100 }}>
-                                                    aa
-                                                </Text>
-                                            </View>
-                                        </Col>
-                                        <Col size={2}>
-                                            <View><Text style={{ fontWeight: 'bold', fontSize: 18, color: '#ad46ff', marginTop: 10 }}> Cash Tickets</Text></View>
-                                        </Col>
-                                    </Row>
-                                </Grid>
-                            </Card>
-                        </View>
-                    </Col>
-
-
-
-
-
-                </Row>
-            </Grid>
+      {/* 🟣 Top Button - Private */}
+      <Card
+        style={{
+          width: '80%',
+          marginBottom: 40,
+          borderRadius: 12,
+          backgroundColor: '#ffffff',
+          elevation: 4,
+          shadowColor: '#000',
+          shadowOpacity: 0.1,
+          shadowOffset: { width: 0, height: 3 },
+          shadowRadius: 5,
+        }}
+        onPress={() => navigation.navigate('Private_Dashboard')}
+      >
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            padding: 15,
+          }}
+        >
+          <Text
+            style={{
+              fontSize: 18,
+              fontWeight: 'bold',
+              color: '#3b2c85',
+              flex: 1,
+            }}
+          >
+            Private
+          </Text>
+          <Text
+            style={{
+              fontSize: 20,
+              color: '#ad46ff',
+            }}
+          >
+            🔒
+          </Text>
         </View>
+      </Card>
 
-             </ScrollView>
-               </SafeAreaView>
+      {/* 🟢 Bottom Button - Public */}
+      <Card
+        style={{
+          width: '80%',
+          borderRadius: 12,
+          backgroundColor: '#ffffff',
+          elevation: 4,
+          shadowColor: '#000',
+          shadowOpacity: 0.1,
+          shadowOffset: { width: 0, height: 3 },
+          shadowRadius: 5,
+        }}
+        onPress={() => navigation.navigate('Public_Dashboard')}
+      >
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            padding: 15,
+          }}
+        >
+          <Text
+            style={{
+              fontSize: 18,
+              fontWeight: 'bold',
+              color: '#3b2c85',
+              flex: 1,
+            }}
+          >
+            Public
+          </Text>
+          <Text
+            style={{
+              fontSize: 20,
+              color: '#28a745',
+            }}
+          >
+            🌐
+          </Text>
+        </View>
+      </Card>
+    </View>
+  </ScrollView>
+</SafeAreaView>
+
          
 
     )
