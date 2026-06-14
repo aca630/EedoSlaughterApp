@@ -6,7 +6,7 @@ export async function SearchTeller(body) {
 
     
   const response = await axios.get(
-    `${'http://192.168.1.157:8000/api/'}reset/teller?username=${body?.username}`,
+    `${'http://192.168.1.202:8000/api/'}reset/teller?username=${body?.username}`,
     {
       headers: {
         'Content-Type': 'application/json',
@@ -23,7 +23,7 @@ export async function ResetTeller(body) {
     console.log(body,' xx');
    
     const response = await axios.put(
-      `${'http://192.168.1.157:8000/api/'}reset/teller/${body.id}`,
+      `${'http://192.168.1.202:8000/api/'}reset/teller/${body.id}`,
       {
         
       },
@@ -41,7 +41,7 @@ export async function ResetTeller(body) {
     export async function DeactivateTeller(body) {
  
       const response = await axios.put(
-        `${'http://192.168.1.157:8000/api/'}teller/updateStatus/${body.id}`,
+        `${'http://192.168.1.202:8000/api/'}teller/updateStatus/${body.id}`,
         {
           isActive:0
         },
@@ -59,7 +59,7 @@ export async function ResetTeller(body) {
       export async function ActivateTeller(body) {
  
         const response = await axios.put(
-          `${'http://192.168.1.157:8000/api/'}teller/updateStatus/${body.id}`,
+          `${'http://192.168.1.202:8000/api/'}teller/updateStatus/${body.id}`,
           {
             isActive:1
           },

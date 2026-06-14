@@ -1,31 +1,18 @@
-import React, { Component, useRef, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import {
-    Image,
     SafeAreaView,
     StyleSheet,
-    useWindowDimensions,
     View,
 } from 'react-native';
 import {
-    ActivityIndicator,
     Card,
-    FAB,
-    Modal,
-    Portal,
-    Provider,
-    RadioButton,
-    SegmentedButtons,
-    Snackbar,
     Text,
-    TextInput,
 } from 'react-native-paper';
 import {
     RefreshControl,
     ScrollView,
-    TouchableOpacity,
 } from 'react-native-gesture-handler';
-import { useCallback, useEffect } from 'react';
 import Toast from 'react-native-toast-message';
 import Button from '../components/Button';
 import Dialog from "react-native-dialog";
@@ -44,9 +31,6 @@ export default function Profile() {
     const [user, setUser] = useState(null);
     // const DeviceuniqueId = DeviceInfo.getUniqueId();
     const [showConfirmDialogSubmit, setshowConfirmDialogSubmit] = useState(false);
-    const [showErrorBind, setshowErrorBind] = useState(false);
-    const [showSuccessrBind, setshowSuccessrBind] = useState(false);
-    const [curVer, setcurVer] = useState(null);
 
     const onRefresh = useCallback(() => {
         setRefreshing(true);
@@ -59,6 +43,7 @@ export default function Profile() {
         let res = await GetToken()
         console.log(res);
         setUser(res)
+        setRefreshing(false);
     }
 
 
@@ -69,7 +54,7 @@ export default function Profile() {
     const HandleDeleteUser = async () => {
 
         try {
-            const savedUser = await AsyncStorage.clear();
+            await AsyncStorage.clear();
             navigation.reset({
                 index: 0,
                 routes: [{ name: 'Login' }],
@@ -114,7 +99,7 @@ export default function Profile() {
         DeviceInfo.getUniqueId().then(async (uniqueId) => {
             let res = await GetToken();
             try {
-                let ApiResponse = await ApiBindeDevice({
+                await ApiBindeDevice({
                     deviceId: uniqueId,
                     user: res,
                 })
@@ -122,7 +107,11 @@ export default function Profile() {
             }
             catch (error) {
 
-                showErrorBind(true)
+                Toast.show({
+                    type: 'error',
+                    text1: 'Error Binding',
+                    text2: 'Please contact the admin',
+                });
                 console.log(error);
             }
 
@@ -140,6 +129,16 @@ export default function Profile() {
         }, [])
     );
 
+    const displayName = user?.full_name || 'No name available';
+    const username = user?.username || 'No username available';
+    const deviceId = user?.deviceId || user?.device_id || 'Not bound';
+    const initials = displayName
+        .split(' ')
+        .filter(Boolean)
+        .slice(0, 2)
+        .map((name) => name.charAt(0).toUpperCase())
+        .join('') || 'SA';
+
 
 
 
@@ -150,39 +149,63 @@ export default function Profile() {
     return (
 
         <>
-            <SafeAreaView style={{ padding: 10 }}>
+            <SafeAreaView style={styles.safeArea}>
                 <ScrollView
+                    contentContainerStyle={styles.scrollContent}
                     refreshControl={
                         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
                     }>
 
 
 
-                    <View style={{ padding: 20 }}>
+                    <View style={styles.content}>
                         <Logo />
 
-                        <View style={{ marginBottom: 20 }}>
-                            <Text style={{ fontSize: 20, textAlign: 'center', fontWeight: 'bold', color: 'black' }}>Collector app</Text>
+                        <View style={styles.header}>
+                            <Text style={styles.appTitle}>Slaughter App</Text>
+                            <Text style={styles.appSubtitle}>User Profile</Text>
                         </View>
 
-                        <View style={{ marginBottom: 20 }}>
-                            <Text style={{ fontSize: 20, textAlign: 'center', fontWeight: 'bold', color: 'black' }}>Name: {user?.full_name}</Text>
-                        </View>
+                        <Card style={styles.profileCard}>
+                            <Card.Content>
+                                <View style={styles.identityBlock}>
+                                    <View style={styles.avatar}>
+                                        <Text style={styles.avatarText}>{initials}</Text>
+                                    </View>
+                                    <Text style={styles.name}>{displayName}</Text>
+                                    <Text style={styles.username}>@{username}</Text>
 
+                                    <Button
+                                        onPress={() => {
+                                            HandleDeleteUser()
+                                        }}
+                                        mode='contained'
+                                        buttonColor='#fee4e2'
+                                        textColor='#b42318'
+                                        style={styles.logoutButton}
+                                    >
+                                        Logout
+                                    </Button>
+                                </View>
 
-                        <View style={{ marginBottom: 20 }}>
-                            <Text style={{ fontSize: 20, textAlign: 'center', fontWeight: 'bold', color: 'black' }}>Username: {user?.username}</Text>
-                        </View>
+                                <View style={styles.divider} />
 
+                                <View style={styles.detailRow}>
+                                    <Text style={styles.detailLabel}>Full name</Text>
+                                    <Text style={styles.detailValue}>{displayName}</Text>
+                                </View>
 
-                        <View>
-                            <View><Button onPress={() => {
+                                <View style={styles.detailRow}>
+                                    <Text style={styles.detailLabel}>Username</Text>
+                                    <Text style={styles.detailValue}>{username}</Text>
+                                </View>
 
-                                HandleDeleteUser()
-                            }} mode='outlined' style={{ backgroundColor: 'white' }}><Text style={{ color: 'red' }}>Logout</Text></Button></View>
-
-
-                        </View>
+                                <View style={styles.detailRow}>
+                                    <Text style={styles.detailLabel}>Device ID</Text>
+                                    <Text style={styles.detailValue}>{deviceId}</Text>
+                                </View>
+                            </Card.Content>
+                        </Card>
 
 
 
@@ -215,3 +238,98 @@ export default function Profile() {
 
 
 }
+
+const styles = StyleSheet.create({
+    safeArea: {
+        flex: 1,
+        backgroundColor: '#f6f7fb',
+    },
+    scrollContent: {
+        flexGrow: 1,
+        padding: 10,
+    },
+    content: {
+        flex: 1,
+        padding: 20,
+    },
+    header: {
+        alignItems: 'center',
+        marginTop: 16,
+        marginBottom: 22,
+    },
+    appTitle: {
+        color: '#1f2937',
+        fontSize: 24,
+        fontWeight: 'bold',
+        textAlign: 'center',
+    },
+    appSubtitle: {
+        color: '#6b7280',
+        fontSize: 14,
+        marginTop: 4,
+        textAlign: 'center',
+    },
+    profileCard: {
+        borderRadius: 8,
+        backgroundColor: '#ffffff',
+        elevation: 3,
+    },
+    identityBlock: {
+        alignItems: 'center',
+        paddingTop: 8,
+        paddingBottom: 18,
+    },
+    avatar: {
+        alignItems: 'center',
+        backgroundColor: '#ede9fe',
+        borderRadius: 36,
+        height: 72,
+        justifyContent: 'center',
+        marginBottom: 12,
+        width: 72,
+    },
+    avatarText: {
+        color: '#6d28d9',
+        fontSize: 24,
+        fontWeight: 'bold',
+    },
+    name: {
+        color: '#111827',
+        fontSize: 20,
+        fontWeight: 'bold',
+        textAlign: 'center',
+    },
+    username: {
+        color: '#6b7280',
+        fontSize: 14,
+        marginTop: 4,
+        textAlign: 'center',
+    },
+    divider: {
+        backgroundColor: '#e5e7eb',
+        height: 1,
+        marginBottom: 4,
+    },
+    detailRow: {
+        borderBottomColor: '#f1f2f4',
+        borderBottomWidth: 1,
+        paddingVertical: 14,
+    },
+    detailLabel: {
+        color: '#6b7280',
+        fontSize: 12,
+        fontWeight: '600',
+        marginBottom: 4,
+        textTransform: 'uppercase',
+    },
+    detailValue: {
+        color: '#111827',
+        fontSize: 16,
+        fontWeight: '600',
+    },
+    logoutButton: {
+        borderRadius: 8,
+        marginTop: 16,
+        minWidth: 160,
+    },
+});

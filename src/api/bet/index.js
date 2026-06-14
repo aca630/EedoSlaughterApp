@@ -4,7 +4,7 @@ import axios from "axios";
 export async function checkBetNo(body) {
 
   const response = await axios.get(
-    `${'http://192.168.1.157:8000/api/'}teller/betsetting?tellerId=${body?.tellerId}&betNo=${body?.betNo}`,
+    `${'http://192.168.1.202:8000/api/'}teller/betsetting?tellerId=${body?.tellerId}&betNo=${body?.betNo}`,
     {
       headers: {
         'Content-Type': 'application/json',
@@ -22,7 +22,7 @@ export async function postBet(body, token) {
 
   console.log(token, ' token');
   const response = await axios.post(
-    `${'http://192.168.1.157:8000/api/'}teller/bet`,
+    `${'http://192.168.1.202:8000/api/'}teller/bet`,
     body,
     {
       headers: {
@@ -41,7 +41,7 @@ export async function getBets(auth) {
 
 
   const response = await axios.get(
-    `${'http://192.168.1.157:8000/api/'}teller/bet?tellerId=${auth?.tellerId}&from=${auth?.from}&to=${auth?.to}`,
+    `${'http://192.168.1.202:8000/api/'}teller/bet?tellerId=${auth?.tellerId}&from=${auth?.from}&to=${auth?.to}`,
     {
       headers: {
         'Content-Type': 'application/json',
@@ -58,7 +58,7 @@ export async function getBets(auth) {
 export async function getBetbyId(id, auth) {
 
   const response = await axios.get(
-    `${'http://192.168.1.157:8000/api/'}accountant/claim/${id}`,
+    `${'http://192.168.1.202:8000/api/'}accountant/claim/${id}`,
     {
       headers: {
         'Content-Type': 'application/json',
@@ -75,7 +75,7 @@ export async function voidBet(body, auth) {
   console.log(auth);
 
   const response = await axios.put(
-    `${'http://192.168.1.157:8000/api/'}teller/bet/${body?.transactionId}`,
+    `${'http://192.168.1.202:8000/api/'}teller/bet/${body?.transactionId}`,
     {
       voidDate: body?.voidDate,
       isVoid: body?.isVoid,
